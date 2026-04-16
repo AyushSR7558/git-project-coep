@@ -32,4 +32,69 @@ class Bank {
         this.accountNumber = new HashMap<>();
         this.sc = new Scanner(System.in);
     }
+    //Generate unique account number
+    private String generateAccountNumber() {
+        return UUID.randomUUID().toString();
+    }
+
+    String addUser(String accountPassword) {
+        String userAccountNumber = generateAccountNumber();
+        accountNumber.put(userAccountNumber, new Account(accountPassword));
+        return userAccountNumber;
+    }
+
+
+    // Authentication (INFINITE LOOP)
+    boolean auth(Account user) {
+        while (true) {
+            System.out.print("Enter the Password: ");
+            String enteredPassword = sc.nextLine();
+            if(enteredPassword.equals("###")) {
+                return false;
+            }
+            if (user.getPassword().equals(enteredPassword)) {
+                return true;
+            } else {
+                System.out.println("Wrong password! Try again.");
+            }
+        }
+    }
+
+    // Deposit money
+    boolean deposit(String accNumber, int amount) {
+        if (!accountNumber.containsKey(accNumber)) {
+            System.out.println("Account not found!");
+            return false;
+        }
+
+        Account user = accountNumber.get(accNumber);
+
+        if (auth(user)) {
+            user.balance += amount;
+            balance += amount;
+            return true;
+        }
+        return false;
+    }
+
+    // Withdraw money
+    boolean withdraw(String accNumber, int amount) {
+        if (!accountNumber.containsKey(accNumber)) {
+            System.out.println("Account not found!");
+            return false;
+        }
+
+        Account user = accountNumber.get(accNumber);
+
+        if (auth(user)) {
+            if (user.balance < amount) {
+                System.out.println("Insufficient Balance!");
+                return false;
+            }
+            user.balance -= amount;
+            balance -= amount;
+            return true;
+        }
+        return false;
+    }
 }
