@@ -97,4 +97,29 @@ class Bank {
         }
         return false;
     }
+    // Check balance
+    void checkBalance(String accNumber) {
+        if (!accountNumber.containsKey(accNumber)) {
+            System.out.println("Account not found!");
+            return;
+        }
+        System.out.println("Balance: " + accountNumber.get(accNumber).balance);
+    }
+
+    void displayAllUsers() {
+        if (accountNumber.isEmpty()) {
+            System.out.println("No users found in this bank.");
+            return;
+        }
+
+        System.out.println("\n--- All Users in Bank: " + name + " ---");
+
+        for (Map.Entry<String, Account> entry : accountNumber.entrySet()) {
+            String accNo = entry.getKey();
+            Account acc = entry.getValue();
+
+            System.out.println("Account Number: " + accNo +
+                    " | Balance: " + acc.balance);
+        }
+    }
 }
