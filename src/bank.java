@@ -108,7 +108,7 @@ class Bank {
 
     void displayAllUsers() {
         if (accountNumber.isEmpty()) {
-            System.out.println("No users found in this bank.");
+            System.out.println("User not found in this bank!.");
             return;
         }
 
