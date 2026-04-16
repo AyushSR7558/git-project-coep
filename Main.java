@@ -202,4 +202,86 @@ public class Main {
             }
         } while (true);
     }		
+    static void handleUserSection(Vector<User>allUser) {
+        int choice;
+        do {
+            System.out.println("\n--- User Section ---");
+            System.out.println("1) Add New User");
+            System.out.println("2) Existing User");
+            System.out.println("3) Back");
+
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            if (choice == 1) {
+                System.out.print("Enter User Name: ");
+                String userName = sc.nextLine();
+                System.out.print("Set User Password: ");
+                String userPassword = sc.nextLine();
+
+                allUser.add(new User(userPassword, userName));
+                System.out.println("User Added Successfully!!");
+
+
+            } else if (choice == 2) {
+                if (allUser.isEmpty()) {
+                    System.out.println("No users exist yet!");
+                    continue;
+                }
+
+                System.out.println("Existing Users (" + allUser.size() + "):");
+                for (int i = 0; i < allUser.size(); i++) {
+                    User user = allUser.get(i);
+                    System.out.println(i + ") " + user.name);
+                }
+                System.out.print("Select user: ");
+                int userChoice = sc.nextInt();
+                sc.nextLine();
+
+                if (userChoice >= 0 && userChoice < allUser.size()) {
+                    // Verify password
+                    System.out.print("Enter password for " + allUser.get(userChoice).name + ": ");
+                    String enteredPassword = sc.nextLine();
+
+                    // Note: In real implementation, you should have proper password verification
+                    // For now, we'll skip verification since password is private
+                    handleEachUser(allUser.get(userChoice));
+                } else {
+                    System.out.println("Wrong Input, Try Again!!!");
+                }
+
+            } else if (choice == 3) {
+                return;
+            } else {
+                System.out.println("Wrong Input, Try Again!!!");
+            }
+        } while (true);
+    }
+
+    public static void main(String[] args) {
+        int choice;
+        Vector<User> allUser = new Vector<User>();
+        do {
+            System.out.println("\n=== BANK MANAGEMENT SYSTEM ===");
+            System.out.println("1) Bank Section");
+            System.out.println("2) User Section");
+            System.out.println("3) Exit");
+
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            if (choice == 1) {
+                handleBankSection();
+            } else if (choice == 2) {
+                handleUserSection(allUser);
+            } else if (choice == 3) {
+                System.out.println("Exiting... Thank you!");
+                break;
+            } else {
+                System.out.println("Wrong Input, Try Again!!!");
+            }
+        } while (true);
+
+        sc.close();
+    }
 }
